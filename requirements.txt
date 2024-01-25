@@ -1,0 +1,4 @@
+beautifulsoup4==4.12.3
+google-api-python-client==2.115.0
+google-auth-oauthlib==1.2.0
+simplegmail==4.1.1
