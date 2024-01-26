@@ -5,6 +5,7 @@ from simplegmail.query import construct_query
 
 app = Flask(__name__)
 
+
 def extract_url_from_html(html_body):
     """Extracts the URL from HTML body."""
     try:
@@ -19,26 +20,29 @@ def extract_url_from_html(html_body):
         print(f"Error extracting URL: {e}")
         return None
 
-@app.route('/')
+
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
-@app.route('/authenticate', methods=['GET', 'POST'])
+
+@app.route("/authenticate", methods=["GET", "POST"])
 def authenticate():
-    if request.method == 'POST':
+    if request.method == "POST":
         # Assuming you have a form field named 'email'
-        email_sender = request.form.get('email')
-        return redirect(url_for('get_urls', email_sender=email_sender))
-    return render_template('authentication.html')
+        email_sender = request.form.get("email")
+        return redirect(url_for("get_urls", email_sender=email_sender))
+    return render_template("authentication.html")
 
-@app.route('/get_urls', methods=['GET'])
+
+@app.route("/get_urls", methods=["GET"])
 def get_urls():
     try:
-        email_sender = request.args.get('email_sender')
-        
+        email_sender = request.args.get("email_sender")
+
         # Ensure email_sender is provided
         if not email_sender:
-            return redirect(url_for('authenticate'))
+            return redirect(url_for("authenticate"))
 
         gmail = Gmail()
 
@@ -65,6 +69,7 @@ def get_urls():
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": str(e)})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
